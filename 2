@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+#include <math.h>
+#define _CRT_SECURE_NO_WARNINGS
+double sin_n(double x, int N);
+double sin_eps(double x, double eps);
+int main() {
+	setlocale(LC_ALL, ".UTF8");
+	double x, eps;
+	int N;
+	printf("Введите значение x (в радианах): ");
+	scanf("%lf", &x);
+	printf("Введите количество членов ряда N: ");
+	scanf("%d", &N);
+	printf("Введите точность вычислений в eps: ");
+	scanf("%lf", &eps);
+	double res1 = sin(x);
+	double res2 = sin_n(x, N);
+	double res3 = sin_eps(x, eps);
+	printf("Результат вычислений");
+	printf("Стандартная функция sin(x): %.15f\n", res1);
+	printf("Через ряд членов N: %.15f\n", res2);
+	printf("Через точность вычислений: %.15f\n", res3);
+	return 0;
+}
+double sin_n(double x, int N) {
+	double sum = 0.0;
+	double term = x;
+	for (int k = 1; k <= N; ++k) {
+		sum += term;
+		term = -term * x * x / ((2 * k) * (2 * k + 1));
+	}
+	return sum;
+}
+double sin_eps(double x, double eps) {
+	double sum = 0.0;
+	double term = x;
+	int k = 1;
+	while (fabs(term) >= eps) {
+		sum += term;
+		term = -term * x * x / ((2 * k) * (2 * k + 1));
+		k++;
+	}
+	return sum;
+}
