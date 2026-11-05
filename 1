@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <math.h>
+double fa(double x){
+    double y;
+    if (x<=3){
+        y = (x*x-3*x+9)/1.0;
+    }else{
+        y = 1.0/(pow(x,3)+3);
+    }
+    return y;
+}
+double fb(double x){
+    double y = x * exp(sin(x*x));
+    return y;
+}
+int main(){
+    double x;
+    int choise;
+    printf("Введите значение x: ");
+    if(scanf("%lf", &x) != 1){
+        printf("Ошибка ввода\n");
+        return 1;
+    }
+    double f1 = fa(x);
+    double f2 = fb(x);
+    printf("\n---Выберите действие---\n");
+    printf("1.Расчет значения функции F1(x)\n");
+    printf("2.Расчет значения функции F2(x)\n");
+    printf("3.Вывод обоих значений функций\n");
+    printf("4.Расчет произведения, разности квадратов и удвоенной суммы\n");
+    printf("5.Выйти из программы\n");
+    printf("Выберите пункт меню(1-5): ");
+    scanf("%d", &choise);
+    switch (choise){
+        case 1:
+            printf("F1(x) = %lf\n", f1);
+            break;
+        case 2:
+            printf("F2(x) = %lf\n", f2);
+            break;
+        case 3:
+            printf("fa(x) = %lf, fb(x) = %lf\n", f1, f2);
+            break;
+        case 4:{
+            double proizved = f1 * f2;
+            double diff_squart = (f1 * f1) - (f2 * f2);
+            double double_sum = 2 * (f1 + f2);
+            printf("Результаты расчетов\n");
+            printf("Произведение равно: %lf\n", proizved);
+            printf("Разность квадратов равна: %lf\n", diff_squart);
+            printf("Удвоенная сумма равна: %lf\n", double_sum);
+            
+            printf("%lf%lf%lf", proizved, diff_squart, double_sum);
+            break;
+        }
+        case 5:
+            printf("Выход из программы\n");
+            break;
+        default:
+            printf("Неправильный ввод");
+            break;
+    }
+    return 0;
+}
