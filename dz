@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+#include <math.h>
+#define _CRT_SECURE_NO_WARNINGS
+#define M_PI 3.14
+int main() {
+    setlocale(LC_ALL, ".UTF8");
+    int choise;
+    char symbol;
+    int h, b;
+    double angle, area;
+    int step;
+    int row, col;
+    printf("Введите символ для рисования: ");
+    scanf(" %c", &symbol);
+    printf("Введите высоту трапеции (h): ");
+    scanf("%d", &h);
+    printf("Введите верхнее основание (b): ");
+    scanf("%d", &b);
+    printf("Введите угол при нижнем основании в градусах (угол a): ");
+    scanf("%lf", &angle);
+
+    printf("\n---Выберите действие---\n");
+    printf("1.рассчитать площадь\n");
+    printf("2.вывести определение фигуры\n");
+    printf("3.нарисовать фигуру\n");
+    printf("4.Выйти из программы\n");
+    printf("Выберите пункт меню(1-4): ");
+    scanf("%d", &choise);
+    switch (choise) {
+    case 1:
+        area = (angle + b) / 2 * h;
+        printf("Площадь трапеции равна: %f", area);
+        break;
+    case 2:
+        printf("Высота трапеции равна: %d", h);
+        printf("верхнее основание равно: %d", b);
+        printf("нижнее основание равно: %d", angle);
+        printf("угол при нижнем основании в градусах: %d", angle);
+        break;
+    case 3:
+        if (h <= 0 || b <= 0 || angle <= 0 || angle >= 90) {
+            printf("Некорректные параметры геометрической фигуры.\n");
+            return 1;
+        }
+        double angle_rad = angle * M_PI / 180.0;
+        step = (int)round((h - 1) / tan(angle_rad)) / (h - 1);
+        if (step < 1) step = 1;
+        printf("\n--- Результат: Прямоугольная трапеция (контур) ---\n");
+        row = 1;
+        do {
+            int current_width = b + (row - 1) * step;
+            col = 1;
+            do {
+                if (row == 1 || row == h || col == 1 || col == current_width) {
+                    printf("%c ", symbol);
+                }
+                else {
+                    printf("  ");
+                }
+                col++;
+            } while (col <= current_width);
+            printf("\n");
+            row++;
+        } while (row <= h);
+        break;
+    case 4:
+        printf("Выход из программы\n");
+        break;
+    default:
+        printf("Неправильный ввод");
+        break;
+    }
+
+    return 0;
+}
